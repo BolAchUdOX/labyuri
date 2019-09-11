@@ -1,2 +1,0 @@
-# labyuri
-LAB FINAL YURI
