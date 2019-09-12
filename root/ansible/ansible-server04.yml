@@ -12,44 +12,44 @@
        name: firewalld
        state: stopped
        enabled: False
-       
-   - name: Adicionando repositorio do Docker
-     get_url:
+
+  - name: Adicionando repositorio do Docker
+    get_url:
        url: https://download.docker.com/linux/centos/docker-ce.repo
        dest: /etc/yum.repos.d/docer-ce.repo
 
-   - name: Adicionando repositorio do Jenkins
-     command: wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+  - name: Adicionando repositorio do Jenkins
+    command: wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
 
-   - name: Importando Chave do Jenkins
-     rpm_key:
+  - name: Importando Chave do Jenkins
+    rpm_key:
       key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
       state: present
 
-   - name: Instalacao Java
-     yum:
+  - name: Instalacao Java
+    yum:
       name: java
       state: present
 
-   - name: Instalacao jenkins
-     yum:
+  - name: Instalacao jenkins
+    yum:
       name: jenkins
       state: present
 
-   - name: Instalacao docker
-     yum:
+  - name: Instalacao docker
+    yum:
       name: docker
       state: present
 
-   - name: Habilitando a porta 8080
-     shell: iptables -I INPUT -p tcp --dport 8080 -m state --state NEW,ESTABLISHED -j ACCEPT
+  - name: Habilitando a porta 8080
+    shell: iptables -I INPUT -p tcp --dport 8080 -m state --state NEW,ESTABLISHED -j ACCEPT
 
-   - name: Iniciando servico jenkins
-     service:
+  - name: Iniciando servico jenkins
+    service:
         name: jenkins
         state: started
 
-   - name: Iniciando servico docker
-     service:
+  - name: Iniciando servico docker
+    service:
         name: docker
         state: started
