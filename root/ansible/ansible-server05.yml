@@ -24,10 +24,9 @@
     - pwgen
 
   - name: Adicionando repositorio do Graylog
-    yum_repository:
-      name: graylog
-      description: GRAYLOG YUM repo
-      baseurl: https://packages.graylog2.org/repo/packages/graylog-3.0-repository_latest.rpm
+    yum:
+      name: https://packages.graylog2.org/repo/packages/graylog-3.0-repository_latest.rpm
+      state: present
 
   - name: Criando REPO do Elasticsearch
     copy:
