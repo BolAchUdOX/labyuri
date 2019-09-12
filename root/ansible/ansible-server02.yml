@@ -3,6 +3,16 @@
   hosts: server02
   tasks:
 
+  - name: Disabilitando SELinux
+    selinux:
+     state: disabled
+
+  - name: Desabilitando Firewall
+    service:
+       name: firewalld
+       state: stopped
+       enabled: False
+    
   - name: Baixando Terraform
     get_url:
       url: https://releases.hashicorp.com/terraform/0.12.5/terraform_0.12.5_linux_amd64.zip
@@ -48,12 +58,6 @@
     service:
       name: rundeckd
       state: restarted
-
-  - name: Desabilitando Firewall
-    service:
-       name: firewalld
-       state: stopped
-       enabled: False
 
   - name: Criando REPO do GCLOUD
     copy:
