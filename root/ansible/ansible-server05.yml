@@ -1,6 +1,6 @@
 ---
 - name: GRAYLOG
-  hosts: server06
+  hosts: server05
 
   tasks:
   - name: Disabilitando SELinux
