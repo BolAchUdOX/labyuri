@@ -3,6 +3,16 @@
   sudo: yes
 
   tasks:
+  - name: Disabilitando SELinux
+    selinux:
+     state: disabled
+
+  - name: Desabilitando Firewall
+    service:
+       name: firewalld
+       state: stopped
+       enabled: False
+
   - name: Instalacao Banco
     yum:
       name: mariadb-server
@@ -18,21 +28,7 @@
       name: httpd
       state: present
 
-  - name: echo
-    shell: echo "helloword" > /var/www/html/info.php
-
-  - name: Reiniciando Apache
-    service:
-      name: httpd
-      state: restarted
-
-  - name: Reiniciando Apache
+  - name: Iniciando o Apache
     service:
       name: httpd
       state: started
-
-  - name: Desabilitando Firewall
-    service:
-       name: firewalld
-       state: stopped
-       enabled: False
