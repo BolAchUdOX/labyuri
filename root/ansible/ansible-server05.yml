@@ -19,9 +19,7 @@
       state: installed
     with_items:
     - java-1.8.0-openjdk-headless
-    - epel-release
     - wget
-    - pwgen
 
   - name: Adicionando repositorio do Graylog
     yum:
