@@ -1,0 +1,55 @@
+---
+- name: Terraform
+  hosts: server02
+  tasks:
+
+  - name: Baixando Terraform
+    get_url:
+      url: https://releases.hashicorp.com/terraform/0.12.5/terraform_0.12.5_linux_amd64.zip
+      dest: /root
+  - name: Instalacao Unzip
+    package: name=unzip state=latest
+
+  - name: Descompactar o pacote
+    shell: /usr/bin/unzip /root/terraform_0.12.5_linux_amd64.zip
+
+  - name: Criando Bash Terraform
+    shell: /usr/bin/mv /root/terraform /usr/bin/
+    
+  - name: Rundeck
+    yum: 
+      name: "{{ item }}"
+      state: installed
+    with_items:
+      - java-1.8.0
+      - http://repo.rundeck.org/latest.rpm
+    
+  - name: Instalando Rundeck
+    yum:
+      name: rundeck
+      state: installed
+
+  - name: Configurandos o Rundeck
+    systemd:
+      name: rundeckd
+      enabled: yes
+      state: started
+      daemon_reload: yes
+
+  - name: Desabilitando Firewall
+    service:
+       name: firewalld
+       state: stopped
+       enabled: False
+       
+  - name: Atualizando o sistema e Instalando o GCloud
+    yum:
+     name: google-cloud-sdk
+     update_cache: yes
+
+  - name: Criando diretorio GCLOUD
+    file:
+     path: /root/google_cloud
+     state: directory
+
+
