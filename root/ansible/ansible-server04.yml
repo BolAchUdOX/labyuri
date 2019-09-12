@@ -19,7 +19,9 @@
        dest: /etc/yum.repos.d/docer-ce.repo
 
   - name: Adicionando repositorio do Jenkins
-    command: wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    get_url:
+       url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+       dest: /etc/yum.repos.d/jenkins.repo
 
   - name: Importando Chave do Jenkins
     rpm_key:
