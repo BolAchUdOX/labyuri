@@ -54,12 +54,25 @@
       name: elasticsearch
       state: installed
 
-  - name: Configurando o Elasticsearch
+  - name: Habilitando o Elasticsearch
     systemd:
       name: elasticsearch
       enabled: yes
       state: started
       daemon_reload: yes
+
+  - name: Configurando o Elasticsearch
+    copy:
+      src: /root/labyuri/etc/elasticsearch/elasticsearch.yml
+      dest: /etc/elasticsearch
+      owner: root
+      group: root
+      mode: u=rw,g=r,o=r
+
+  - name: Reiniciando o Elasticsearch
+    yum:
+      name: elasticsearch
+      state: restarted
 
   - name: Instalando MongoDB
     yum:
@@ -78,9 +91,22 @@
       name: graylog-server
       state: installed
 
-  - name: Configurando o Graylog
+  - name: Habilitando o Graylog
     systemd:
       name: graylog-server
       enabled: yes
       state: started
       daemon_reload: yes
+
+  - name: Configurando o Graylog
+    copy:
+      src: /root/labyuri/etc/graylog/server/server.conf
+      dest: /etc/graylog/server/server.conf
+      owner: root
+      group: root
+      mode: u=rw,g=r,o=r
+
+  - name: Reiniciando o graylog
+    yum:
+      name: graylog-server
+      state: restarted
