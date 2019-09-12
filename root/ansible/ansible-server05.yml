@@ -1,6 +1,6 @@
 ---
-- name: jenkins && docker
-  hosts: server04
+- name: GRAYLOG
+  hosts: server06
 
   tasks:
   - name: Disabilitando SELinux
