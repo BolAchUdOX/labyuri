@@ -10,13 +10,13 @@
   - name: Instalacao Unzip
     package: name=unzip state=latest
 
-  - name: Descompactar o pacote
+  - name: Descompactar o Terraform
     shell: /usr/bin/unzip /root/terraform_0.12.5_linux_amd64.zip
 
   - name: Criando Bash Terraform
     shell: /usr/bin/mv /root/terraform /usr/bin/
 
-  - name: Rundeck
+  - name: Instalando Dependencias do Rundeck
     yum:
       name: "{{ item }}"
       state: installed
@@ -36,13 +36,18 @@
       state: started
       daemon_reload: yes
 
-  - name: Copiando as configs do Rundeck
+  - name: Habilitando pagina do rundeck
     copy:
       src: /root/labyuri/etc/rundeck/rundeck-config.properties
       dest: /etc/rundeck
       owner: root
       group: root
       mode: u=rw,g=r,o=r
+
+  - name: Reiniciando o Rundeck
+    service:
+      name: rundeckd
+      state: restarted
 
   - name: Desabilitando Firewall
     service:
