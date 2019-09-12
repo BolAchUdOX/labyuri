@@ -70,7 +70,7 @@
       mode: u=rw,g=r,o=r
 
   - name: Reiniciando o Elasticsearch
-    yum:
+    service:
       name: elasticsearch
       state: restarted
 
@@ -107,6 +107,6 @@
       mode: u=rw,g=r,o=r
 
   - name: Reiniciando o graylog
-    yum:
+    service:
       name: graylog-server
       state: restarted
