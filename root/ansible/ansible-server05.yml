@@ -1,0 +1,87 @@
+---
+- name: jenkins && docker
+  hosts: server04
+
+  tasks:
+  - name: Disabilitando SELinux
+    selinux:
+     state: disabled
+
+  - name: Desabilitando Firewall
+    service:
+       name: firewalld
+       state: stopped
+       enabled: False
+
+  - name: Instalando Dependencias do Graylog
+    yum:
+      name: "{{ item }}"
+      state: installed
+    with_items:
+    - java-1.8.0-openjdk-headless
+    - epel-release
+    - wget
+    - pwgen
+
+  - name: Adicionando repositorio do Graylog
+    yum_repository:
+      name: graylog
+      description: GRAYLOG YUM repo
+      baseurl: https://packages.graylog2.org/repo/packages/graylog-3.0-repository_latest.rpm
+
+  - name: Criando REPO do Elasticsearch
+    copy:
+      src: /root/labyuri/etc/elasticsearch.repo
+      dest: /etc/yum.repos.d
+      owner: root
+      group: root
+      mode: u=rw,g=r,o=r
+
+  - name: Criando REPO do MongoDB
+    copy:
+      src: /root/labyuri/etc/mongodb-org-4.0.repo
+      dest: /etc/yum.repos.d
+      owner: root
+      group: root
+      mode: u=rw,g=r,o=r
+
+  - name: Baixando Chave do Elasticsearch
+    rpm_key:
+      key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      state: present
+
+  - name: Instalando Elasticsearch
+    yum:
+      name: elasticsearch
+      state: installed
+
+  - name: Configurando o Elasticsearch
+    systemd:
+      name: elasticsearch
+      enabled: yes
+      state: started
+      daemon_reload: yes
+
+  - name: Instalando MongoDB
+    yum:
+      name: mongodb-org
+      state: installed
+
+  - name: Configurando o MongoDB
+    systemd:
+      name: mongodb-org
+      enabled: yes
+      state: started
+      daemon_reload: yes
+
+  - name: Instalando Graylog
+    yum:
+      name: graylog-server
+      state: installed
+
+  - name: Configurando o Graylog
+    systemd:
+      name: graylog-server
+      enabled: yes
+      state: started
+      daemon_reload: yes
