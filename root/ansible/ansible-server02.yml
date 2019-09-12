@@ -39,7 +39,7 @@
   - name: Copiando as configs do Rundeck
     copy:
       src: /root/labyuri/etc/rundeck/rundeck-config.properties
-      dest: /etc/rundeck/rundeck-config.properties
+      dest: /etc/rundeck
       owner: root
       group: root
       mode: u=rw,g=r,o=r
@@ -53,7 +53,7 @@
   - name: Criando REPO do GCLOUD
     copy:
       src: /root/labyuri/etc/google-cloud-sdk.repo
-      dest: /etc/yum.repos.d/google-cloud-sdk.repo
+      dest: /etc/yum.repos.d
       owner: root
       group: root
       mode: u=rw,g=r,o=r
