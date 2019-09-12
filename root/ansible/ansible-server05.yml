@@ -68,7 +68,7 @@
 
   - name: Configurando o MongoDB
     systemd:
-      name: mongodb-org
+      name: mongod
       enabled: yes
       state: started
       daemon_reload: yes
