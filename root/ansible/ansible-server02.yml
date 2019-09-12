@@ -36,12 +36,13 @@
       state: started
       daemon_reload: yes
 
-  - copy:
-    src: /root/labyuri/etc/rundeck/rundeck-config.properties
-    dest: /etc/rundeck/rundeck-config.properties
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
+  - name: Copiando as configs do Rundeck
+    copy:
+      src: /root/labyuri/etc/rundeck/rundeck-config.properties
+      dest: /etc/rundeck/rundeck-config.properties
+      owner: root
+      group: root
+      mode: u=rw,g=r,o=r
 
   - name: Desabilitando Firewall
     service:
@@ -49,12 +50,13 @@
        state: stopped
        enabled: False
 
-  - copy:
-    src: /root/labyuri/etc/google-cloud-sdk.repo
-    dest: /etc/yum.repos.d/google-cloud-sdk.repo
-    owner: root
-    group: root
-    mode: u=rw,g=r,o=r
+  - name: Criando REPO do GCLOUD
+    copy:
+      src: /root/labyuri/etc/google-cloud-sdk.repo
+      dest: /etc/yum.repos.d/google-cloud-sdk.repo
+      owner: root
+      group: root
+      mode: u=rw,g=r,o=r
 
   - name: Atualizando o sistema e Instalando o GCloud
     yum:
