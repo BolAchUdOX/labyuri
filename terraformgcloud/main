@@ -1,0 +1,4 @@
+provider "google" {
+ credentials = "${file ("/root/terraformgcloud/terraform-key.json")}"
+ project = "Projeto-final"
+ region = "UE"
